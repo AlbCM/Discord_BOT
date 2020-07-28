@@ -34,7 +34,7 @@ client.on("message", async message => {
     stop(message, serverQueue);
     return;
   } else {
-    message.channel.send("*by iFractus / Albeiro*, Ingresa comando valido!");
+    message.channel.send("```*by iFractus / Albeiro*``` **Ingresa comando valido! ** ");
   }
 });
 
@@ -44,12 +44,12 @@ async function execute(message, serverQueue) {
   const voiceChannel = message.member.voice.channel;
   if (!voiceChannel)
     return message.channel.send(
-      "*by iFractus / Albeiro*, Necesitas estar en canal de voz para reproducir"
+      "```*by iFractus / Albeiro*```, Necesitas estar en canal de voz para reproducir"
     );
   const permissions = voiceChannel.permissionsFor(message.client.user);
   if (!permissions.has("CONNECT") || !permissions.has("SPEAK")) {
     return message.channel.send(
-      "*by iFractus / Albeiro*, No tengo suficientes permisos para ingresar al canal!"
+      "*```by iFractus / Albeiro*```, ** No tengo suficientes permisos para ingresar al canal! **"
     );
   }
 
@@ -84,24 +84,24 @@ async function execute(message, serverQueue) {
     }
   } else {
     serverQueue.songs.push(song);
-    return message.channel.send(`*by iFractus / Albeiro* ${song.title} Agregada a la cola !  `);
+    return message.channel.send("```*by iFractus / Albeiro*``` " + `${song.title}` + "** Agregada a la cola ! **");
   }
 }
 
 function skip(message, serverQueue) {
   if (!message.member.voice.channel)
     return message.channel.send(
-      "*by iFractus / Albeiro* Necesitas estar en el canal para saltar la canción! "
+      "```*by iFractus / Albeiro*``` **Necesitas estar en el canal para saltar la canción!** "
     );
   if (!serverQueue)
-    return message.channel.send("*by iFractus / Albeiro* No hay más canciones en cola");
+    return message.channel.send("```*by iFractus / Albeiro*``` **No hay más canciones en cola** ");
   serverQueue.connection.dispatcher.end();
 }
 
 function stop(message, serverQueue) {
   if (!message.member.voice.channel)
     return message.channel.send(
-      "*by iFractus / Albeiro* Necesitas estar en el canal para detener la canción"
+      "```*by iFractus / Albeiro*``` **Necesitas estar en el canal para detener la canción**"
     );
   serverQueue.songs = [];
   serverQueue.connection.dispatcher.end();
@@ -123,7 +123,7 @@ function play(guild, song) {
     })
     .on("error", error => console.error(error));
   dispatcher.setVolumeLogarithmic(serverQueue.volume / 5);
-  serverQueue.textChannel.send(`*by iFractus / Albeiro* Sonando: **${song.title}**`);
+  serverQueue.textChannel.send("```*by iFractus / Albeiro*``` Sonando: " + `**${song.title}**`);
 }
 
 client.login(token);
